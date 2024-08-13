@@ -7,6 +7,7 @@ from skimage.transform import resize
 # 首先是读取图片文件，图片用矩阵表示分辨率为1206*1206
 # 图像是一个三维图像高1206，宽1206，颜色通道数3（红绿蓝）
 img1 = imread("./data/img1.jpg")
+print(img1)
 print(img1.dtype, img1.shape)
 
 # 对颜色进行调节,通过标量来缩放颜色通道

@@ -253,4 +253,4 @@ print((m1.T + vector4).T)
 print(m1 + np.reshape(vector4, (2, 1)))
 # 用法3：矩阵乘数字
 print(m1 * 2)
-
+np.arange(16).reshape(2,8)
