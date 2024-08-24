@@ -14,5 +14,9 @@ a3 = (a1 == a2)
 print(a3)
 
 print([1]*10)
+print([[1]]+[[2]])
+a = [[1]]
+b = [[2]]
+print(np.vstack((a,b)))
 
 

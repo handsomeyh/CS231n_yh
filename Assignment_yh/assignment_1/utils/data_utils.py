@@ -62,4 +62,61 @@ def load_CIFAR10(ROOT):
     return Xtr, Ytr, Xts, Yts
 
 
+def get_CIFAR10_data(num_training=49000, num_validation=1000, num_test=1000,subtract_mean=True):
+    """
+    将加载cifar10数据进一步封装，将cifar中的数据进行划分，将训练集划分一部分为验证集，同样可以做数据简化
+    @param num_training:训练集的范围大小
+    @param num_validation:验证集的范围大小
+    @param num_test:测试集的范围大小
+    @param subtract_mean:选择是否对数据进行归一化处理
+    @return:返回加载数据的字典，拥有6个字段：X_train, y_train, X_val, y_val, X_test, y_test
+    """
+    # 获得cifar10原始数据
+    ROOT = 'F:\CS213n Note\cs231n_learn_pycharm\cs231n_learn\Assignment_yh/assignment_1\dataset\cifar-10-batches-py'
+    # 清除多余变量
+    try:
+        del X_train, y_train, X_val, y_val, X_test
+        print("清除之前已经加载过的数据")
+    except:
+        pass
+
+    X_train, y_train, X_test, y_test = load_CIFAR10(ROOT)
+
+
+    # 简化并且划分数据，利用整数数组索引
+    # 先在原来训练集的基础上划分出验证集
+    mask = list(range(num_training, num_training+num_validation))
+    X_val = X_train[mask]
+    y_val = y_train[mask]
+    # 再分验证集
+    mask = list(range(num_training))
+    X_train = X_train[mask]
+    y_train = y_train[mask]
+    # 再分测试集
+    mask = list(range(num_test))
+    X_test = X_test[mask]
+    y_test = y_test[mask]
+
+    # 减去列平均值图像出图像特征
+    if subtract_mean:
+        mean_img = np.mean(X_train, axis=0)
+        X_train -= mean_img
+        X_train -= mean_img
+        X_val -= mean_img
+        X_test -= mean_img
+
+    # 高维装置使得颜色通道数可以排在前面
+    # X_train = X_train.transpose(0, 3, 1, 2).copy()
+    # X_val = X_val.transpose(0, 3, 1, 2).copy()
+    # X_test = X_test.transpose(0, 3, 1, 2).copy()
+
+    # 封装数据
+    dict = {'X_train': X_train, 'y_train': y_train,
+      'X_val': X_val, 'y_val': y_val,
+      'X_test': X_test, 'y_test': y_test
+            }
+
+    return dict
+
+
 
