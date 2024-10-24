@@ -50,7 +50,7 @@ class LinearClassifier(object):
             # 计算损失和梯度
             loss, grad = self.loss(X_batch, y_batch, reg)
             loss_history.append(loss) # 记录损失
-            # 使用梯度与学习率更新权重
+            # 使用梯度与学习率更新权重，SGD
             self.W -= learning_rate * grad
             # 打印本次迭代计算的损失
             if verbose and it % 100 == 0:
